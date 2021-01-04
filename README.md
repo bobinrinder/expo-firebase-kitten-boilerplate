@@ -1,4 +1,4 @@
-# Expo Firebase Kitten Boilerplate
+# Expo Firebase Kitten Boilerplate [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/bobinrinder/react-keyboard-input-hook/pulls)
 
 <p>
   <!-- iOS -->
@@ -35,9 +35,9 @@ Before getting started, make surer you are setup for React Native, Yarn and that
 
 ### Step 1 - Download and Install
 
-Clone this repo with `git clone git@github.com:bobinrinder/expo-firebase-kitten-boilerplate.git`
+Run `npx create-react-native-app -t https://github.com/bobinrinder/expo-firebase-kitten-boilerplate` to install this template with Expo.
 
-Run `cd expo-firebase-kitten-boilerplate && yarn && cp /config/firebaseConfig.example.js /config/fireebaseConfig.js` to enter root project folder and install required modules.
+Then enter your newly created project folder and run `cp ./config/firebaseConfig.example.js ./config/firebaseConfig.js` to copy the Firebase config example.
 
 ### Step 2 - Enable Email Signup
 
