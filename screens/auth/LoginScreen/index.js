@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
 import { Button, Input, Text, Icon } from "@ui-kitten/components";
-import { ImageOverlay } from "./extra/image-overlay.component";
+import ImageOverlay from "./../../../components/ImageOverlay/ImageOverlay";
 import {
   FacebookIcon,
   GoogleIcon,

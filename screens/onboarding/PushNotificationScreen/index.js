@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Platform } from "react-native";
 import { Button, Text, TopNavigation } from "@ui-kitten/components";
-import { ImageOverlay } from "./extra/image-overlay.component";
+import ImageOverlay from "./../../../components/ImageOverlay/ImageOverlay";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Permissions from "expo-permissions";

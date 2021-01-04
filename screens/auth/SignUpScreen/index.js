@@ -9,7 +9,7 @@ import {
   useStyleSheet,
   Icon,
 } from "@ui-kitten/components";
-import { ImageOverlay } from "./extra/image-overlay.component";
+import ImageOverlay from "./../../../components/ImageOverlay/ImageOverlay";
 import {
   EmailIcon,
   FacebookIcon,
