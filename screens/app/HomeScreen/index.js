@@ -4,7 +4,7 @@ import useFirebaseUser from "./../../../hooks/useFirebaseUser";
 import * as firebase from "firebase";
 
 export default function HomeScreen({ navigation }) {
-  const firebaseUser = useFirebaseUser();
+  const [firebaseUser] = useFirebaseUser();
 
   return (
     <View style={styles.container}>

@@ -59,18 +59,22 @@ const styles = StyleSheet.create({
 });
 
 export const LoginScreen = () => {
-  const [email, setEmail] = React.useState();
-  const [password, setPassword] = React.useState();
+  const [email, setEmail] = React.useState("m13@m13.com");
+  const [password, setPassword] = React.useState("testtest");
   const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const navigation = useNavigation();
 
   const onSignInButtonPress = async () => {
+    setIsLoading(true);
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
     } catch (err) {
       console.log(err);
       toast.show("Something went wrong, sorry!", { type: "danger" });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -143,9 +147,9 @@ export const LoginScreen = () => {
           style={styles.signInButton}
           size="giant"
           onPress={onSignInButtonPress}
-          disabled={!email || !password}
+          disabled={!email || !password || isLoading}
         >
-          {false ? "LOADING..." : "SIGN IN"}
+          {isLoading ? "LOADING..." : "SIGN IN"}
         </Button>
         <View style={styles.socialAuthContainer}>
           <Text style={styles.socialAuthHintText} status="control">

@@ -7,6 +7,7 @@ import "firebase/firestore";
 //import "firebase/storage";
 import firebaseConfig from "../../config/firebaseConfig";
 import { useDocumentData } from "react-firebase-hooks/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -14,35 +15,34 @@ firebase.initializeApp(firebaseConfig);
 export const FirebaseUserContext = React.createContext(null);
 
 const useFirebaseAuth = () => {
-  const [firebaseUser, setFirebaseUser] = useState(null);
+  const [firebaseUser, loadingFirebaseUser, error] = useAuthState(
+    firebase.auth()
+  );
 
   const dbh = firebase.firestore();
   const firestoreUserReference = firebaseUser
     ? dbh.collection("users").doc(firebaseUser.uid)
     : null;
-  const [firestoreUser, loading, error] = useDocumentData(
-    firestoreUserReference
-  );
+  const [
+    firestoreUser,
+    loadingFirestoreUser,
+    errorFirestoreUser,
+  ] = useDocumentData(firestoreUserReference);
 
-  useEffect(() => {
-    const authStateSubscriber = firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setFirebaseUser(user);
-      } else {
-        setFirebaseUser(null);
-      }
-    });
-    return authStateSubscriber;
-  }, []);
-
-  if (!firestoreUser) {
-    return firebaseUser;
+  if (firestoreUser && firebaseUser) {
+    return [
+      {
+        ...firebaseUser,
+        ...firestoreUser,
+      },
+      loadingFirebaseUser || loadingFirestoreUser,
+    ];
   }
 
-  return {
-    ...firebaseUser,
-    ...firestoreUser,
-  };
+  return [
+    firebaseUser,
+    loadingFirebaseUser || loadingFirestoreUser || firestoreUserReference,
+  ];
 };
 
 const FirebaseUserProvider = ({ children }) => {

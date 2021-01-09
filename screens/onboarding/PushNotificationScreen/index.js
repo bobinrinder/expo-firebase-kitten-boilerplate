@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View, Platform } from "react-native";
 import { Button, Text, TopNavigation } from "@ui-kitten/components";
 import ImageOverlay from "./../../../components/ImageOverlay/ImageOverlay";
-import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
@@ -39,17 +38,10 @@ const SkipText = (props) => (
 );
 
 export const PushNotificationScreen = () => {
-  const [expoPushToken, setExpoPushToken] = useState("");
-
-  const firebaseUser = useFirebaseUser();
-
-  const navigation = useNavigation();
+  const [firebaseUser] = useFirebaseUser();
 
   const onSignInButtonPress = async () => {
     const token = await registerForPushNotificationsAsync();
-    if (token) {
-      setExpoPushToken(token);
-    }
 
     const dbh = firebase.firestore();
 

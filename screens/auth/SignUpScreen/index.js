@@ -84,10 +84,12 @@ const themedStyles = StyleService.create({
 });
 
 export const SignUpScreen = () => {
+  const [name, setName] = React.useState();
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [termsAccepted, setTermsAccepted] = React.useState(false);
   const [passwordVisible, setPasswordVisible] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const styles = useStyleSheet(themedStyles);
 
@@ -96,6 +98,7 @@ export const SignUpScreen = () => {
   const toast = useToast();
 
   const onSignUpButtonPress = async () => {
+    setIsLoading(true);
     try {
       const userCredential = await firebase
         .auth()
@@ -105,6 +108,7 @@ export const SignUpScreen = () => {
         const dbh = firebase.firestore();
 
         dbh.collection("users").doc(userCredential.user.uid).set({
+          name,
           email,
           hasCompletedOnboarding: false,
         });
@@ -112,6 +116,8 @@ export const SignUpScreen = () => {
     } catch (err) {
       console.log(err);
       toast.show("Something went wrong, sorry!", { type: "danger" });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -149,6 +155,15 @@ export const SignUpScreen = () => {
           <Input
             style={styles.formInput}
             status="control"
+            // autoCapitalize={true}
+            placeholder="Name"
+            accessoryRight={EmailIcon}
+            value={name}
+            onChangeText={setName}
+          />
+          <Input
+            style={styles.formInput}
+            status="control"
             autoCapitalize="none"
             placeholder="Email"
             accessoryRight={EmailIcon}
@@ -183,9 +198,9 @@ export const SignUpScreen = () => {
           style={styles.signUpButton}
           size="giant"
           onPress={onSignUpButtonPress}
-          disabled={!email || !password}
+          disabled={!email || !password || isLoading}
         >
-          {false ? "LOADING..." : "SIGN UP"}
+          {isLoading ? "LOADING..." : "SIGN UP"}
         </Button>
         <View style={styles.socialAuthContainer}>
           <Text style={styles.socialAuthHintText} status="control">
