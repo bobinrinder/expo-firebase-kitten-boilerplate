@@ -10,7 +10,7 @@ import {
 } from "./extra/icons";
 import { KeyboardAvoidingView } from "./extra/3rd-party";
 import { useNavigation } from "@react-navigation/native";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 
 const styles = StyleSheet.create({
   container: {

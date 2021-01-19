@@ -7,7 +7,6 @@ import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import useFirebaseUser from "./../../../hooks/useFirebaseUser";
-import * as firebase from "firebase";
 
 const styles = StyleSheet.create({
   container: {
@@ -43,15 +42,10 @@ export const PushNotificationScreen = () => {
   const onSignInButtonPress = async () => {
     const token = await registerForPushNotificationsAsync();
 
-    const dbh = firebase.firestore();
-
-    dbh
-      .collection("users")
-      .doc(firebaseUser.uid)
-      .update({
-        hasCompletedOnboarding: true,
-        expoPushToken: token || null,
-      });
+    await firebaseUser.update({
+      hasCompletedOnboarding: true,
+      expoPushToken: token || null,
+    });
   };
 
   return (

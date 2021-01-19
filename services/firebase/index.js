@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import * as firebase from "firebase";
+import React from "react";
+import firebase from "firebase/app";
 import "firebase/auth";
 //import "firebase/database";
 import "firebase/firestore";
@@ -19,9 +19,9 @@ const useFirebaseAuth = () => {
     firebase.auth()
   );
 
-  const dbh = firebase.firestore();
+  const firestore = firebase.firestore();
   const firestoreUserReference = firebaseUser
-    ? dbh.collection("users").doc(firebaseUser.uid)
+    ? firestore.collection("users").doc(firebaseUser.uid)
     : null;
   const [
     firestoreUser,
@@ -29,11 +29,32 @@ const useFirebaseAuth = () => {
     errorFirestoreUser,
   ] = useDocumentData(firestoreUserReference);
 
+  // helper to update the user attributes
+  // accepts values object with the attributes to update
+  const updateFirebaseUser = async (values, successToast = null) => {
+    if (firebaseUser?.uid && values) {
+      try {
+        await firestoreUserReference.update(values);
+
+        if (successToast) {
+          toast.show(successToast, { type: "success" });
+        }
+
+        return true;
+      } catch (err) {
+        console.log(err);
+        toast.show("Something went wrong updating, sorry!", { type: "danger" });
+      }
+    }
+    return false;
+  };
+
   if (firestoreUser && firebaseUser) {
     return [
       {
         ...firebaseUser,
         ...firestoreUser,
+        update: updateFirebaseUser,
       },
       loadingFirebaseUser || loadingFirestoreUser,
     ];

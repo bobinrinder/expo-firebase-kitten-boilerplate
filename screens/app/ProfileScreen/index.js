@@ -18,11 +18,12 @@ import { Profile } from "./extra/data";
 import useFirebaseUser from "./../../../hooks/useFirebaseUser";
 import { TopNavigation, TopNavigationAction } from "@ui-kitten/components";
 import { SafeAreaView } from "react-native-safe-area-context";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
 
 const MenuIcon = (props) => <Icon {...props} name="more-vertical" />;
 
-const InfoIcon = (props) => <Icon {...props} name="info" />;
+const InfoIcon = (props) => <Icon {...props} name="settings-2-outline" />;
 
 const LogoutIcon = (props) => <Icon {...props} name="log-out" />;
 
@@ -70,6 +71,9 @@ export default ({ navigation }) => {
 
   const onItemSelect = (index) => {
     setMenuVisible(!menuVisible);
+    if (index.row === 0) {
+      navigation && navigation.navigate("ProfileSettingsScreen");
+    }
     if (index.row === 1) {
       firebase.auth().signOut();
     }
@@ -83,7 +87,7 @@ export default ({ navigation }) => {
         onBackdropPress={toggleMenu}
         onSelect={onItemSelect}
       >
-        <MenuItem accessoryLeft={InfoIcon} title="About" />
+        <MenuItem accessoryLeft={InfoIcon} title="Settings" />
         <MenuItem accessoryLeft={LogoutIcon} title="Logout" />
       </OverflowMenu>
     </React.Fragment>
@@ -112,7 +116,7 @@ export default ({ navigation }) => {
           <View style={styles.locationContainer}>
             <PinIcon />
             <Text style={styles.location} status="control">
-              {profile.location}
+              {firebaseUser.location}
             </Text>
           </View>
           <View style={styles.profileButtonsContainer}>

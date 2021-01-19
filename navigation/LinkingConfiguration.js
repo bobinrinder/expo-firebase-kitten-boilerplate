@@ -14,6 +14,7 @@ export default {
           Profile: {
             screens: {
               ProfileScreen: "/Profile/ProfileScreen",
+              ProfileSettingsScreen: "/Profile/ProfileSettingsScreen",
             },
           },
         },

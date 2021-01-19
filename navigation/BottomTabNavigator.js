@@ -5,6 +5,7 @@ import * as React from "react";
 
 import HomeScreen from "../screens/app/HomeScreen";
 import ProfileScreen from "../screens/app/ProfileScreen";
+import ProfileSettingsScreen from "../screens/app/ProfileSettingsScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -19,7 +20,7 @@ export default function BottomTabNavigator() {
         component={HomeNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="home-outline" color={color} />
           ),
         }}
       />
@@ -28,7 +29,7 @@ export default function BottomTabNavigator() {
         component={ProfileNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="person-outline" color={color} />
           ),
         }}
       />
@@ -67,6 +68,11 @@ function ProfileNavigator() {
         name="ProfileScreen"
         component={ProfileScreen}
         options={{ headerTitle: "Profile" }}
+      />
+      <ProfileStack.Screen
+        name="ProfileSettingsScreen"
+        component={ProfileSettingsScreen}
+        options={{ headerTitle: "Profile Settings" }}
       />
     </ProfileStack.Navigator>
   );

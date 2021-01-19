@@ -6,7 +6,7 @@ import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import Navigation from "./navigation";
 import usePushNotifications from "./hooks/usePushNotifications";
 import FirebaseUserProvider from "./services/firebase";
-import { ToastProvider } from "react-native-fast-toast";
+import Toast from "react-native-fast-toast";
 
 export default function App() {
   const { notification } = usePushNotifications();
@@ -15,12 +15,11 @@ export default function App() {
     <SafeAreaProvider>
       <IconRegistry icons={EvaIconsPack} />
       <ApplicationProvider {...eva} theme={eva.light}>
-        <ToastProvider>
-          <FirebaseUserProvider>
-            <Navigation />
-          </FirebaseUserProvider>
-        </ToastProvider>
+        <FirebaseUserProvider>
+          <Navigation />
+        </FirebaseUserProvider>
       </ApplicationProvider>
+      <Toast ref={(ref) => (global["toast"] = ref)} />
     </SafeAreaProvider>
   );
 }

@@ -18,8 +18,7 @@ import {
 } from "./extra/icons";
 import { KeyboardAvoidingView } from "./extra/3rd-party";
 import { useNavigation } from "@react-navigation/native";
-import * as firebase from "firebase";
-import { useToast } from "react-native-fast-toast";
+import firebase from "firebase/app";
 
 const themedStyles = StyleService.create({
   container: {
@@ -95,8 +94,6 @@ export const SignUpScreen = () => {
 
   const navigation = useNavigation();
 
-  const toast = useToast();
-
   const onSignUpButtonPress = async () => {
     setIsLoading(true);
     try {
@@ -105,9 +102,9 @@ export const SignUpScreen = () => {
         .createUserWithEmailAndPassword(email, password);
 
       if (userCredential?.user?.uid) {
-        const dbh = firebase.firestore();
+        const firestore = firebase.firestore();
 
-        dbh.collection("users").doc(userCredential.user.uid).set({
+        firestore.collection("users").doc(userCredential.user.uid).set({
           name,
           email,
           hasCompletedOnboarding: false,

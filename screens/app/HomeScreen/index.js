@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import useFirebaseUser from "./../../../hooks/useFirebaseUser";
-import * as firebase from "firebase";
+import firebase from "firebase/app";
 
 export default function HomeScreen({ navigation }) {
   const [firebaseUser] = useFirebaseUser();
