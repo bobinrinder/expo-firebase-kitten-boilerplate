@@ -29,6 +29,7 @@ export default {
       Onboarding: {
         screens: {
           PushNotificationScreen: "/Onboarding/PushNotificationScreen/",
+          ProfileImageScreen: "/Onboarding/ProfileImageScreen/",
         },
       },
       NotFound: "*",

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View, TouchableWithoutFeedback } from "react-native";
-import { Button, Input, Text, Icon } from "@ui-kitten/components";
+import { Button, Input, Text, Icon, Spinner } from "@ui-kitten/components";
 import ImageOverlay from "./../../../components/ImageOverlay/ImageOverlay";
 import {
   FacebookIcon,
@@ -149,7 +149,7 @@ export const LoginScreen = () => {
           onPress={onSignInButtonPress}
           disabled={!email || !password || isLoading}
         >
-          {isLoading ? "LOADING..." : "SIGN IN"}
+          {isLoading ? <Spinner /> : "SIGN IN"}
         </Button>
         <View style={styles.socialAuthContainer}>
           <Text style={styles.socialAuthHintText} status="control">

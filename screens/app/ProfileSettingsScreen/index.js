@@ -9,6 +9,7 @@ import {
   TopNavigation,
   TopNavigationAction,
   Icon,
+  Spinner,
   IndexPath,
 } from "@ui-kitten/components";
 import { ProfileSetting } from "./extra/profile-setting.component";
@@ -24,7 +25,7 @@ const genders = ["female", "male", "other"];
 
 export default ({ navigation }) => {
   const styles = useStyleSheet(themedStyles);
-  const [firebaseUser] = useFirebaseUser();
+  const [firebaseUser, loading, isUpdatingUser] = useFirebaseUser();
 
   const [name, setName] = useState(firebaseUser?.name);
   const [email, setEmail] = useState(firebaseUser?.email);
@@ -131,8 +132,12 @@ export default ({ navigation }) => {
           type="date"
           onChange={setDob}
         />
-        <Button style={styles.doneButton} onPress={onDoneButtonPress}>
-          Update
+        <Button
+          style={styles.doneButton}
+          onPress={onDoneButtonPress}
+          disabled={isUpdatingUser}
+        >
+          {isUpdatingUser ? <Spinner /> : "Update"}
         </Button>
       </ScrollView>
     </SafeAreaView>

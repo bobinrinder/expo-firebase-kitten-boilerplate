@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import firebase from "firebase/app";
 import "firebase/auth";
 //import "firebase/database";
@@ -15,6 +15,7 @@ firebase.initializeApp(firebaseConfig);
 export const FirebaseUserContext = React.createContext(null);
 
 const useFirebaseAuth = () => {
+  const [isUpdatingUser, setIsUpdatingUser] = useState(false);
   const [firebaseUser, loadingFirebaseUser, error] = useAuthState(
     firebase.auth()
   );
@@ -32,6 +33,7 @@ const useFirebaseAuth = () => {
   // helper to update the user attributes
   // accepts values object with the attributes to update
   const updateFirebaseUser = async (values, successToast = null) => {
+    setIsUpdatingUser(true);
     if (firebaseUser?.uid && values) {
       try {
         await firestoreUserReference.update(values);
@@ -40,12 +42,14 @@ const useFirebaseAuth = () => {
           toast.show(successToast, { type: "success" });
         }
 
+        setIsUpdatingUser(false);
         return true;
       } catch (err) {
         console.log(err);
         toast.show("Something went wrong updating, sorry!", { type: "danger" });
       }
     }
+    setIsUpdatingUser(false);
     return false;
   };
 
@@ -55,14 +59,18 @@ const useFirebaseAuth = () => {
         ...firebaseUser,
         ...firestoreUser,
         update: updateFirebaseUser,
+        signOut: () => firebase.auth().signOut(),
+        updateProfile: (profile) => firebaseUser.updateProfile(profile),
       },
       loadingFirebaseUser || loadingFirestoreUser,
+      isUpdatingUser,
     ];
   }
 
   return [
     firebaseUser,
     loadingFirebaseUser || loadingFirestoreUser || firestoreUserReference,
+    isUpdatingUser,
   ];
 };
 

@@ -8,6 +8,7 @@ import {
   Text,
   useStyleSheet,
   Icon,
+  Spinner,
 } from "@ui-kitten/components";
 import ImageOverlay from "./../../../components/ImageOverlay/ImageOverlay";
 import {
@@ -108,6 +109,7 @@ export const SignUpScreen = () => {
           name,
           email,
           hasCompletedOnboarding: false,
+          onboardingStep: "PushNotificationScreen",
         });
       }
     } catch (err) {
@@ -197,7 +199,7 @@ export const SignUpScreen = () => {
           onPress={onSignUpButtonPress}
           disabled={!email || !password || isLoading}
         >
-          {isLoading ? "LOADING..." : "SIGN UP"}
+          {isLoading ? <Spinner /> : "SIGN UP"}
         </Button>
         <View style={styles.socialAuthContainer}>
           <Text style={styles.socialAuthHintText} status="control">

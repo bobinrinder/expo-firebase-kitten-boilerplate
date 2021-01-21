@@ -1,10 +1,11 @@
 import * as React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Spinner } from "@ui-kitten/components";
 
 export default function NotFoundScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text>Loading...</Text>
+      <Spinner size="giant" />
     </View>
   );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Image } from "react-native";
 import {
   Avatar,
   Button,
@@ -18,7 +18,6 @@ import { Profile } from "./extra/data";
 import useFirebaseUser from "./../../../hooks/useFirebaseUser";
 import { TopNavigation, TopNavigationAction } from "@ui-kitten/components";
 import { SafeAreaView } from "react-native-safe-area-context";
-import firebase from "firebase/app";
 import "firebase/auth";
 
 const MenuIcon = (props) => <Icon {...props} name="more-vertical" />;
@@ -75,7 +74,7 @@ export default ({ navigation }) => {
       navigation && navigation.navigate("ProfileSettingsScreen");
     }
     if (index.row === 1) {
-      firebase.auth().signOut();
+      firebaseUser.signOut();
     }
   };
 
@@ -109,7 +108,12 @@ export default ({ navigation }) => {
           style={styles.header}
           source={require("./assets/image-background.jpg")}
         >
-          <Avatar style={styles.profileAvatar} source={profile.photo} />
+          <Avatar
+            style={styles.profileAvatar}
+            source={{
+              uri: firebaseUser?.photoURL,
+            }}
+          />
           <Text style={styles.profileName} category="h5" status="control">
             {firebaseUser.name}
           </Text>

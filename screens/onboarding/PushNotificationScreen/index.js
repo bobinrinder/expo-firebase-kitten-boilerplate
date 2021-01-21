@@ -36,16 +36,18 @@ const SkipText = (props) => (
   </Text>
 );
 
-export const PushNotificationScreen = () => {
+export const PushNotificationScreen = ({ navigation }) => {
   const [firebaseUser] = useFirebaseUser();
 
   const onSignInButtonPress = async () => {
     const token = await registerForPushNotificationsAsync();
 
     await firebaseUser.update({
-      hasCompletedOnboarding: true,
+      onboardingStep: "ProfileImageScreen",
       expoPushToken: token || null,
     });
+
+    navigation && navigation.navigate("ProfileImageScreen");
   };
 
   return (
