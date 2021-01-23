@@ -37,7 +37,9 @@ export default ({ navigation }) => {
         )
       : null
   );
-  const [dob, setDob] = useState(new Date(firebaseUser?.dob?.seconds * 1000));
+  const [dob, setDob] = useState(
+    firebaseUser?.dob ? new Date(firebaseUser?.dob?.seconds * 1000) : null
+  );
 
   const onDoneButtonPress = async () => {
     const result = await firebaseUser.update(
