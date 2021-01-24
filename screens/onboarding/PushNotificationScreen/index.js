@@ -1,12 +1,13 @@
 import React from "react";
 import { StyleSheet, View, Platform } from "react-native";
-import { Button, Text, TopNavigation } from "@ui-kitten/components";
+import { Button, Text } from "@ui-kitten/components";
 import ImageOverlay from "./../../../components/ImageOverlay/ImageOverlay";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as Permissions from "expo-permissions";
 import Constants from "expo-constants";
 import * as Notifications from "expo-notifications";
 import useFirebaseUser from "./../../../hooks/useFirebaseUser";
+import OnboardingTopBar from "./../../../components/OnboardingTopBar/OnboardingTopBar";
 
 const styles = StyleSheet.create({
   container: {
@@ -24,17 +25,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 });
-
-const SkipText = (props) => (
-  <Text
-    appearance="alternative"
-    category="s1"
-    style={{ paddingRight: 10 }}
-    {...props}
-  >
-    Skip
-  </Text>
-);
 
 export const PushNotificationScreen = ({ navigation }) => {
   const [firebaseUser] = useFirebaseUser();
@@ -56,7 +46,7 @@ export const PushNotificationScreen = ({ navigation }) => {
       source={require("./../../../assets/image-background.jpg")}
     >
       <SafeAreaView>
-        <TopNavigation accessoryRight={SkipText} appearance="control" />
+        <OnboardingTopBar nextScreen="ProfileImageScreen" />
         <View style={styles.headerContainer}>
           <Text category="h1" status="control">
             Push Notifications

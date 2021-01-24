@@ -20,7 +20,12 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.linkText}>Go to Auth</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.replace("Onboarding")}
+        onPress={() => {
+          firebaseUser.update({
+            hasCompletedOnboarding: false,
+            onboardingStep: "PushNotificationScreen",
+          });
+        }}
         style={styles.link}
       >
         <Text style={styles.linkText}>Go to Onboarding</Text>

@@ -93,7 +93,7 @@ export default ({ navigation }) => {
         <Layout style={styles.photoSection} level="1">
           <ProfileAvatar
             style={styles.photo}
-            source={profile.photo}
+            source={firebaseUser.photoURL}
             editButton={renderPhotoButton}
           />
           <View style={styles.nameSection}>

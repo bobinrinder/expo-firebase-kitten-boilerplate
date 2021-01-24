@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Platform } from "react-native";
-import {
-  Button,
-  Text,
-  TopNavigation,
-  Avatar,
-  Spinner,
-} from "@ui-kitten/components";
+import { Button, Text, Avatar, Spinner } from "@ui-kitten/components";
 import ImageOverlay from "./../../../components/ImageOverlay/ImageOverlay";
+import OnboardingTopBar from "./../../../components/OnboardingTopBar/OnboardingTopBar";
 import { SafeAreaView } from "react-native-safe-area-context";
 import * as ImagePicker from "expo-image-picker";
 import useFirebaseUser from "./../../../hooks/useFirebaseUser";
@@ -30,17 +25,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 });
-
-const SkipText = (props) => (
-  <Text
-    appearance="alternative"
-    category="s1"
-    style={{ paddingRight: 10 }}
-    {...props}
-  >
-    Skip
-  </Text>
-);
 
 export const ProfileImageScreen = () => {
   const [firebaseUser] = useFirebaseUser();
@@ -99,7 +83,7 @@ export const ProfileImageScreen = () => {
       source={require("./../../../assets/image-background.jpg")}
     >
       <SafeAreaView>
-        <TopNavigation accessoryRight={SkipText} appearance="control" />
+        <OnboardingTopBar isLastScreen={true} />
         <View style={styles.headerContainer}>
           <Text category="h1" status="control">
             Profile Image
