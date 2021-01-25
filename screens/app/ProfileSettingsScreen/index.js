@@ -27,9 +27,9 @@ export default ({ navigation }) => {
   const styles = useStyleSheet(themedStyles);
   const [firebaseUser, loading, isUpdatingUser] = useFirebaseUser();
 
-  const [name, setName] = useState(firebaseUser?.name);
-  const [email, setEmail] = useState(firebaseUser?.email);
-  const [location, setLocation] = useState(firebaseUser?.location);
+  const [name, setName] = useState(firebaseUser?.name ?? "");
+  const [email, setEmail] = useState(firebaseUser?.email ?? "");
+  const [location, setLocation] = useState(firebaseUser?.location ?? "");
   const [gender, setGender] = useState(
     firebaseUser?.gender
       ? new IndexPath(
@@ -45,10 +45,10 @@ export default ({ navigation }) => {
     const result = await firebaseUser.update(
       {
         name,
-        location,
-        gender: genders[gender?.row],
-        location,
-        dob,
+        email,
+        gender: genders[gender?.row] ?? null,
+        location: location ?? null,
+        dob: dob ?? null,
       },
       "Awesome, profile updated!"
     );
