@@ -18,6 +18,10 @@ import { CameraIcon } from "./extra/icons";
 import { Profile } from "./extra/data";
 import { SafeAreaView } from "react-native-safe-area-context";
 import useFirebaseUser from "./../../../hooks/useFirebaseUser";
+import {
+  pickImage,
+  uploadImageAsync,
+} from "./../../../utilities/imageUpload/imageUpload";
 
 const profile = Profile.helenKuper;
 
@@ -58,12 +62,32 @@ export default ({ navigation }) => {
     }
   };
 
+  const [isUploading, setIsUploading] = useState(false);
+
+  const pickImagePress = async () => {
+    const imageUri = await pickImage();
+
+    setIsUploading(true);
+
+    const publicImageUrl = await uploadImageAsync(imageUri, firebaseUser.uid);
+
+    await firebaseUser.updateProfile({ photoURL: publicImageUrl });
+
+    await firebaseUser.update({
+      photoURL: publicImageUrl,
+      hasCompletedOnboarding: true,
+    });
+
+    setIsUploading(false);
+  };
+
   const renderPhotoButton = () => (
     <Button
       style={styles.photoButton}
       size="small"
       status="basic"
       icon={CameraIcon}
+      onPress={pickImagePress}
     />
   );
 
